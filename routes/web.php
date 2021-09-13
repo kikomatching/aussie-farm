@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PetController@index')->name('pets.index');
 
 Route::get('pets', 'PetController@index')->name('pets.index');
 Route::get('pets/create', 'PetController@create')->name('pets.create');

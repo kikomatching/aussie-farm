@@ -40,6 +40,6 @@ class CreatePetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pet_details');
+        Schema::dropIfExists('pets');
     }
 }
