@@ -10946,3 +10946,8 @@ a.text-dark:focus {
   cursor: pointer;
 }
 
+.alert-success,
+.alert-danger {
+  display: none;
+}
+

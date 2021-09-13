@@ -17,4 +17,4 @@ Route::get('/', function () {
 
 Route::get('pets', 'PetController@index')->name('pets.index');
 Route::get('pets/create', 'PetController@create')->name('pets.create');
-Route::get('pets/{pet}', 'PetController@update')->name('pets.update');
+Route::get('pets/{pet}', 'PetController@edit')->name('pets.edit');

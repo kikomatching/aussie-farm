@@ -12,9 +12,11 @@ PetList.initializeDxDataGrid([
         dataField: "birthday",
     },
     {
+        caption: "Weight (kg)",
         dataField: "weight", 
     },
     {
+        caption: "Height (cm)",
         dataField: "height", 
     },
     {

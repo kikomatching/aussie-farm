@@ -81,102 +81,114 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/pets/index.js":
-/*!************************************!*\
-  !*** ./resources/js/pets/index.js ***!
-  \************************************/
+/***/ "./resources/js/pets/edit.js":
+/*!***********************************!*\
+  !*** ./resources/js/pets/edit.js ***!
+  \***********************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _modules_PetList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/PetList */ "./resources/js/pets/modules/PetList.js");
+/* harmony import */ var _modules_PetEdit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/PetEdit */ "./resources/js/pets/modules/PetEdit.js");
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
-_modules_PetList__WEBPACK_IMPORTED_MODULE_0__["default"].initializeDxDataGrid([{
-  dataField: "id",
-  visible: false
-}, {
-  dataField: "name"
-}, {
-  dataField: "birthday"
-}, {
-  caption: "Weight (kg)",
-  dataField: "weight"
-}, {
-  caption: "Height (cm)",
-  dataField: "height"
-}, {
-  dataField: "friendly"
-}]);
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+$('#form__edit-pet').on('submit', function (e) {
+  e.preventDefault();
+  $('.alert-danger').css('display', 'none');
+  var id = $('#pet_id').val();
+  var formData = new FormData(document.getElementById('form__edit-pet')); // Hard coded for now since we only have one pet type id which is kangaroos
+
+  formData.append('pet_type_id', 1);
+  var data = {};
+
+  var _iterator = _createForOfIteratorHelper(formData.entries()),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var pair = _step.value;
+      data[pair[0]] = pair[1];
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  fetch('/api/v1/pets/' + id, {
+    method: 'put',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(function (response) {
+    return response.json();
+  }).then(function (response) {
+    if (response.errors) {
+      showErrorAlert(response.errors);
+    } else {
+      showSuccessAlert(response.message);
+    }
+  });
+});
+
+function showSuccessAlert(message) {
+  $('.alert-success').css('display', 'block');
+  $('#alert-success__message').html(message);
+  setTimeout(function () {
+    $('.alert-success').css('display', 'none');
+  }, 5000);
+}
+
+function showErrorAlert(errors) {
+  $('.alert-danger').css('display', 'block');
+  errors.forEach(function (element) {
+    $('#error-list').append('<li>' + element + '</li>');
+  });
+}
 
 /***/ }),
 
-/***/ "./resources/js/pets/modules/PetList.js":
+/***/ "./resources/js/pets/modules/PetEdit.js":
 /*!**********************************************!*\
-  !*** ./resources/js/pets/modules/PetList.js ***!
+  !*** ./resources/js/pets/modules/PetEdit.js ***!
   \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PetList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PetEdit; });
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var PetList = /*#__PURE__*/function () {
-  function PetList() {
-    _classCallCheck(this, PetList);
-  }
-
-  _createClass(PetList, null, [{
-    key: "initializeDxDataGrid",
-    value: function initializeDxDataGrid(columns) {
-      fetch('api/v1/pets').then(function (response) {
-        return response.json();
-      }).then(function (data) {
-        $("#dataGrid").dxDataGrid({
-          allowColumnReordering: true,
-          columns: columns,
-          dataSource: data.data,
-          selection: {
-            mode: "single"
-          },
-          onSelectionChanged: function onSelectionChanged(e) {
-            e.component.byKey(e.currentSelectedRowKeys[0]).done(function (pet) {
-              if (pet) {
-                window.location = 'pets/' + pet.id;
-              }
-            });
-          }
-        });
-      });
-    }
-  }]);
-
-  return PetList;
-}();
+var PetEdit = function PetEdit() {
+  _classCallCheck(this, PetEdit);
+};
 
 
 
 /***/ }),
 
-/***/ 1:
-/*!***************************************!*\
-  !*** multi ./resources/js/pets/index ***!
-  \***************************************/
+/***/ 3:
+/*!**************************************!*\
+  !*** multi ./resources/js/pets/edit ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/html/resources/js/pets/index */"./resources/js/pets/index.js");
+module.exports = __webpack_require__(/*! /var/www/html/resources/js/pets/edit */"./resources/js/pets/edit.js");
 
 
 /***/ })

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Pet;
 
 class PetController extends Controller
 {
@@ -33,7 +33,7 @@ class PetController extends Controller
      */
     public function create()
     {
-        //
+        return view('pets.create');
     }
 
     /**
@@ -44,6 +44,12 @@ class PetController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pet = Pet::find($id);
+
+        if (empty($pet)) {
+            return redirect(route('pets.create'));
+        }
+
+        return view('pets.edit', compact('pet'));
     }
 }
