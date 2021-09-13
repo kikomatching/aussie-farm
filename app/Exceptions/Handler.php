@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Arr;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +48,19 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ValidationException) {
+            $messages = [];
+
+            foreach ($exception->errors() as $key => $error) {
+                $messages[] = Arr::first($error);
+            }
+
+            return response()->json([
+                'message' => $exception->getMessage(),
+                'errors' => $messages,
+            ], $exception->status);
+        }
+
         return parent::render($request, $exception);
     }
 }
