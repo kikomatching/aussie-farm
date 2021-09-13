@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePetRequest;
 use App\Http\Resources\PetResource;
 use App\Models\Pet;
+use App\Models\PetType;
 use App\Services\ResponseHandler\Response;
 
 class PetController extends Controller
@@ -29,9 +31,14 @@ class PetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePetRequest $request)
     {
-        //
+        $petType = PetType::find($request->input('pet_type_id'));
+
+        $pet = $petType->pets()->create($request->validated());
+        $petResource = new PetResource($pet);
+
+        return Response::success($petResource);
     }
 
     /**
@@ -53,17 +60,6 @@ class PetController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
     {
         //
     }
