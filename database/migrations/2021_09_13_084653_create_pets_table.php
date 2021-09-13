@@ -13,9 +13,9 @@ class CreatePetDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pet_details', function (Blueprint $table) {
+        Schema::create('pets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('pet_id');
+            $table->unsignedBigInteger('pet_type_id');
 
             $table->string('name')->unique();
             $table->string('nickname')->nullable()->default('');
@@ -29,7 +29,7 @@ class CreatePetDetailsTable extends Migration
 
             $table->timestamps();
 
-            $table->foreign('pet_id')->references('id')->on('pets');
+            $table->foreign('pet_type_id')->references('id')->on('pets');
         });
     }
 
