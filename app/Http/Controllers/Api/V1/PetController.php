@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePetRequest;
+use App\Http\Requests\UpdatePetRequest;
 use App\Http\Resources\PetListResource;
 use App\Http\Resources\PetResource;
 use App\Models\Pet;
@@ -68,8 +69,18 @@ class PetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePetRequest $request, $id)
     {
-        //
+        $pet = Pet::find($id);
+
+        if (empty($pet)) {
+            return Response::failed([], __('errors.pet.not_found'));
+        }
+
+        $pet->update($request->validated());
+
+        $petResource = new PetResource($pet->fresh());
+
+        return Response::success($petResource);
     }
 }

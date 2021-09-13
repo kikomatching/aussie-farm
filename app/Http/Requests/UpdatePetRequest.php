@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StorePetRequest extends FormRequest
+class UpdatePetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,10 @@ class StorePetRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    {        
         return [
             'pet_type_id' => 'required|exists:pet_types,id',
-            'name' => 'required|string|unique:pets,name',
+            'name' => 'required|string|unique:pets,name,' . $this->route('pet') . ',id',
             'nickname' => '',
             'weight' => 'required|numeric',
             'height' => 'required|numeric',
