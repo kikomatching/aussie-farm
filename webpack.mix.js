@@ -12,4 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/pets/index', 'public/js/pets')
+    .js('resources/js/pets/create', 'public/js/pets')
+    .js('resources/js/pets/edit', 'public/js/pets')
     .sass('resources/sass/app.scss', 'public/css');

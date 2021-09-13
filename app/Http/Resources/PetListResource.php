@@ -16,6 +16,7 @@ class PetListResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'birthday' => Carbon::createFromFormat('Y-m-d', $this->birthday)->toFormattedDateString(),
             'weight' => $this->weight,
