@@ -24,6 +24,7 @@ class StorePetRequest extends FormRequest
     public function rules()
     {
         return [
+            'pet_type_id' => 'required|exists:pet_types,id',
             'name' => 'required|string|unique:pets,name',
             'nickname' => '',
             'weight' => 'required|numeric',
@@ -32,6 +33,18 @@ class StorePetRequest extends FormRequest
             'color' => '',
             'friendly' => 'boolean',
             'birthday' => 'required|date|date_format:Y-m-d',
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {    
+        return [
+            'pet_type_id.exists' => __('errors.pet_type.not_found'),
         ];
     }
 }
