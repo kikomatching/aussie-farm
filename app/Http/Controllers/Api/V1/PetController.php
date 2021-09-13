@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePetRequest;
+use App\Http\Resources\PetListResource;
 use App\Http\Resources\PetResource;
 use App\Models\Pet;
 use App\Models\PetType;
@@ -20,7 +21,7 @@ class PetController extends Controller
     public function index()
     {
         $pets = Pet::all();
-        $petResource = PetResource::collection($pets);
+        $petResource = PetListResource::collection($pets);
 
         return Response::success($petResource);
     }
@@ -49,7 +50,15 @@ class PetController extends Controller
      */
     public function show($id)
     {
-        //
+        $pet = Pet::find($id);
+
+        if (empty($pet)) {
+            return Response::failed([], __('errors.pet.not_found'));
+        }
+
+        $petResource = new PetResource($pet);
+
+        return Response::success($petResource);
     }
 
     /**

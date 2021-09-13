@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
 
 class PetResource extends JsonResource
 {
@@ -15,12 +14,6 @@ class PetResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'name' => $this->name,
-            'birthday' => Carbon::createFromFormat('Y-m-d', $this->birthday)->toFormattedDateString(),
-            'weight' => $this->weight,
-            'height' => $this->height,
-            'friendly' => $this->friendly == true ? __('pets.friendly.yes') : __('pets.friendly.no'),
-        ];
+        return parent::toArray($request);
     }
 }
