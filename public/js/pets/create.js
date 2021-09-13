@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/pets/edit.js":
-/*!***********************************!*\
-  !*** ./resources/js/pets/edit.js ***!
-  \***********************************/
+/***/ "./resources/js/pets/create.js":
+/*!*************************************!*\
+  !*** ./resources/js/pets/create.js ***!
+  \*************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -103,14 +103,13 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
-$('#form__edit-pet').on('submit', function (e) {
+$('#form__add-pet').on('submit', function (e) {
   e.preventDefault();
   $('.alert-danger').css('display', 'none');
-  var id = $('#pet_id').val();
-  var formData = new FormData(document.getElementById('form__edit-pet')); // Hard coded for now since we only have one pet type id which is kangaroos
+  var formData = new FormData(document.getElementById('form__add-pet'));
+  var data = {}; // Hard coded for now since we only have one pet type id which is kangaroos
 
   formData.append('pet_type_id', 1);
-  var data = {};
 
   var _iterator = _createForOfIteratorHelper(formData.entries()),
       _step;
@@ -126,8 +125,8 @@ $('#form__edit-pet').on('submit', function (e) {
     _iterator.f();
   }
 
-  fetch('/api/v1/pets/' + id, {
-    method: 'put',
+  fetch('/api/v1/pets', {
+    method: 'post',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -139,17 +138,17 @@ $('#form__edit-pet').on('submit', function (e) {
     if (response.errors) {
       showErrorAlert(response.errors);
     } else {
-      showSuccessAlert(response.message);
+      showSuccessAlert(response);
     }
   });
 });
 
-function showSuccessAlert(message) {
+function showSuccessAlert(response) {
   $('.alert-success').css('display', 'block');
-  $('#alert-success__message').html(message);
+  $('#alert-success__message').html(response.message);
   setTimeout(function () {
-    $('.alert-success').css('display', 'none');
-  }, 5000);
+    window.location = '/pets/' + response.data.id;
+  }, 2000);
 }
 
 function showErrorAlert(errors) {
@@ -182,14 +181,14 @@ var PetEdit = function PetEdit() {
 
 /***/ }),
 
-/***/ 3:
-/*!**************************************!*\
-  !*** multi ./resources/js/pets/edit ***!
-  \**************************************/
+/***/ 2:
+/*!****************************************!*\
+  !*** multi ./resources/js/pets/create ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/html/resources/js/pets/edit */"./resources/js/pets/edit.js");
+module.exports = __webpack_require__(/*! /var/www/html/resources/js/pets/create */"./resources/js/pets/create.js");
 
 
 /***/ })

@@ -8,7 +8,8 @@
                 <div class="card-header">Kangaroos</div>
 
                 <div class="card-body">                    
-                    {{-- Table here... --}}
+                    <a href="{{ route('pets.create') }}" class="btn btn-primary">Add New Kangaroo</a>
+                    <hr />
                     <div id="dataGrid"></div>
                 </div>
             </div>
